@@ -1,24 +1,4 @@
-'''
-Input: A string BWT(Text) followed by a collection of strings Patterns.
-Output: A list of integers, where the i-th integer corresponds to the number of substring matches of the i-th member of Patterns in Text.
-'''
-'''
-    BetterBWMatching(FirstOccurrence, LastColumn, Pattern, Count)
-        top ← 0
-        bottom ← |LastColumn| − 1
-        while top ≤ bottom
-            if Pattern is nonempty
-                symbol ← last letter in Pattern
-                remove last letter from Pattern
-                if positions from top to bottom in LastColumn contain an occurrence of symbol
-                    top ← FirstOccurrence(symbol) + Countsymbol(top, LastColumn)
-                    bottom ← FirstOccurrence(symbol) + Countsymbol(bottom + 1, LastColumn) − 1
-                else
-                    return 0
-            else
-                return bottom − top + 1
 
-'''
 def BWT_match(BWT, pattern_list):
     FirstOccurrence = {}
     bwt = []
