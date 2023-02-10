@@ -7,7 +7,9 @@ def PatternCount(Pattern, Text):
         if Text[i:i+len(Pattern)] == Pattern:
             count = count+1
     return count
-    
+
+# k-mer Pattern appears in position 0 of Text, position 1 of Text, and so on. so k-mer pattern is |Text| − k + 1 
+
 def FrequentWordsProblem(Text, k):
     FrequentPatterns = [] #empty set 
     Count = {}
