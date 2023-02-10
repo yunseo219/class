@@ -3,8 +3,23 @@ k = 10
 L = 29
 t = 3
 
+"""
+Background knowledge
+k-mer as a "clump" if it appears many times within a short interval of the genome; 
+if there is an interval of Genome of length L in which this k-mer appears at least t times.
+given integers L and t, a k-mer Pattern forms an (L, t)-clump
+
+Sample Input:
+CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA
+5 50 4
+
+Sample Output:
+CGACA GAAGA
+"""
+
 #Input: A string Genome, and integers k, L, and t.
 #Output: All distinct k-mers forming (L, t)-clumps in Genome.
+
 
 def clumpfinding(genome,k,t,L):
     frequentPatterns = [] #empty set
