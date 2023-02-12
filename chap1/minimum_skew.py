@@ -1,5 +1,6 @@
 #Input: A DNA string Genome.
 #Output: All integer(s) i minimizing Skewi (Genome) among all values of i (from 0 to |Genome|).
+#Minimum Skew Problem now provides us with an approximate location of ori 
 
 sequence = "TAAAGACTGCCGAGAGGCCAACACGAGTGCTAGAACGAGGGGCGTAAACGCGGGTCCGAT"
 #output = [11, 24]
