@@ -70,3 +70,45 @@ def NumberToSymbol(number):
 
     Fpatterns = clumpfinding(genome,k,t,L)
     print ' '.join(Fpatterns)
+    
+    
+sequence = "CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA"
+
+k = 5 # k-mer length
+L = 50 # genome length
+t = 4 #k-mer appearance
+
+
+"""
+Background knowledge
+k-mer as a "clump" if it appears many times within a short interval of the genome; 
+if there is an interval of Genome of length L in which this k-mer appears at least t times.
+given integers L and t, a k-mer Pattern forms an (L, t)-clump
+
+Sample Input:
+CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA
+5 50 4
+
+Sample Output:
+CGACA GAAGA
+"""
+
+DNA = str(sequence.upper())
+
+# Create new dic called counts to counts all the kmer
+counts = {}
+for i in range(0, len(DNA) - k + 1):
+	kmer = DNA[i:i + k]
+	if kmer in counts:
+		counts[kmer] += 1
+	else:
+		counts[kmer] = 1
+		
+# Eliminate all pairs that appear less than t times; new dict called frequent
+frequent = {}
+for k in counts:
+	if counts[k] >= t:
+		frequent[k] = counts[k]
+output = ' '.join(frequent.keys())
+print(output)
+
