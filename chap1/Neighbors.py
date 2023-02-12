@@ -1,7 +1,9 @@
-pattern = "CCGTGCTT"
-d = 2
+#For example, to generate Neighbors(CAA,1), first form Neighbors(AA,1) = {AA, CA, GA, TA, AC, AG, AT}. 
+pattern = "ACG"
+d = 1
 #Input: A string Pattern and an integer d.
 #Output: The collection of strings Neighbors(Pattern, d).
+#output: TCG CCG ACG GCG ATG AAG ACA AGG ACC ACT
 
 def hamming_distance(seq1,seq2):
 	distance = 0
@@ -26,6 +28,4 @@ def neighbors(pattern,d):
 			neighborhood.append(pattern[:1]+text)
 	neighborhood = list(set(neighborhood))
 	return neighborhood
-
-result = neighbors(pattern,d)
-print (' '.join (result))
+print (' '.join (neighbors(pattern,d)))
