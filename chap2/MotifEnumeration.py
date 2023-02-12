@@ -1,6 +1,20 @@
-k = 5
+#A brute force approach for solving the Implanted Motif Problem is based on the observation that any (k, d)-motif must be at most d mismatches apart from some k-mer appearing in the first string in Dna. Therefore, we can generate all such k-mers and then check which of them are (k, d)-motifs. -> very slow and inefficient
+
+"""
+   MotifEnumeration(Dna, k, d)
+        Patterns ← an empty set
+        for each k-mer Pattern in the first string in Dna
+            for each k-mer Pattern’ differing from Pattern by at most d mismatches
+                if Pattern' appears in each string from Dna with at most d mismatches
+                    add Pattern' to Patterns
+        remove duplicates from Patterns
+        return Patterns
+"""
+
+k = 3
 d = 1
-Dna = ["CTGTCACGGTGCCGTCTTCGTGAGG", "GCCTAACGTTAAGAGATATGGCGGA","TATATTCAAAACGCTCTCAGGAGTT", "ACGATGAGGAATGGAATCCAAATAA","GCTAGACGATGGTTAAGTCCCGTCT","CATCATTATTTTGCTACGGTCACCT"]
+Dna = ["ATTTGGC","TGCCTTA", "CGGTATC", "GAAAATT"]
+#output: ATT TTT GTT ATA
 
 def hamming_distance(seq1,seq2):
 	distance = 0
