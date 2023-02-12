@@ -1,7 +1,12 @@
+#Frequent Words with Mismatches and Reverse Complements Problem: Find the most frequent k-mers (with mismatches and reverse complements) in a string.
 
-Text = "GATACTACTGATGATGATCGAAGATGATAACGGATCGACTGATAAACTACTCGACTCGGATAAGATGATGATAAAAAAAAAAGATGATAACGGATAAAAAAGATGATAAGATGATGATGATGATACTAAAAGATGATGATCGGATACTGATGATACTGATACTACTGATAAAAACTGATCGAAGATAAAACGAAGATGATACTACTGAT"
-k = 5
-d = 3
+#Input: A DNA string Text as well as integers k and d.
+#Output: All k-mers Pattern maximizing the sum Countd(Text, Pattern)+ Countd(Text, Patternrc) over all possible k-mers.
+
+Text = "ACGTTGCATGTCGCATGATGCATGAGAGCT"
+k = 4 # k-mer length     
+d = 1 # num of mismatch
+#output: ATGT ACAT OR VARIES
 
 def hamming_distance(seq1,seq2):
     distance = 0
@@ -11,12 +16,12 @@ def hamming_distance(seq1,seq2):
             distance += 1
     return distance
 
+# Flip the sequences 
 def ReverseComplement(Pattern):
     revComp = map(complement, Pattern)
     return ('').join(revComp)[::-1]
 
 # Complement of nucleotide
-
 def complement(Nucleotide):
     complements = { 'A': 'T', 'T' : 'A', 'G' : 'C', 'C' : 'G'}
     comp = complements[Nucleotide.upper()] 
@@ -37,7 +42,6 @@ def neighbors(pattern, d):
             neighborhood.add(pattern[0] + suffix)
     return neighborhood
 
-
 def frequentWordsWithMismatchesandReverse(text, k, d):
     count_dict = {}
     for i in range(len(text) - k + 1):
@@ -57,5 +61,3 @@ def frequentWordsWithMismatchesandReverse(text, k, d):
     return [kmer for kmer, count in count_dict.items() if count == max_freq]
 
 print(" ".join(frequentWordsWithMismatchesandReverse(Text, k, d)))
-
-# it runs online
