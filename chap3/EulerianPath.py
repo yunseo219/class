@@ -1,5 +1,24 @@
 #Eulerian Path problem output designs to visit every EDGE in the graph once whereas Hamilitonian Path designs to visit every NODE.
 
+#Input: The adjacency list of a directed graph that has an Eulerian path.
+#Output: An Eulerian path in this graph.
+
+"""
+Sample Input:
+
+0 -> 2
+1 -> 3
+2 -> 1
+3 -> 0,4
+6 -> 3,7
+7 -> 8
+8 -> 9
+9 -> 6
+
+Sample Output:
+6->7->8->9->6->3->0->2->1->3->4
+"""
+
 import sys
 from random import choice
 from re import split
