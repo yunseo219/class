@@ -1,4 +1,8 @@
+#String Composition Problem: Generate the k-mer composition of a string.
 
+#Input: An integer k and a string Text.
+#Output: Compositionk(Text), where the k-mers are arranged in lexicographic order.
+	
 def StringReconstruction(pattern):
     string = pattern[0]
     for i in range(1, len(pattern)):
