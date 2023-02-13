@@ -1,3 +1,12 @@
+#Solve the De Bruijn Graph from a String Problem.
+
+#Input: An integer k and a string Text.
+#Output: DeBruijnk(Text), in the form of an adjacency list.
+
+# k = 4
+# Text = "AAGATTCTCTAAGA"
+# output: AAG -> AGA,AGA and more...
+
 def DeBruijnGraphFromKmers(Patterns):
 	nodes = {}
 	edges = {}
