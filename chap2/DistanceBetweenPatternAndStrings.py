@@ -1,4 +1,4 @@
-#he first potential issue with implementing MedianString is writing a function to compute d(Pattern, Dna) = ∑ti=1 d(Pattern, Dnai), the sum of distances between Pattern and each string in Dna = {Dna1, ..., Dnat}. 
+#the first potential issue with implementing MedianString is writing a function to compute d(Pattern, Dna) = ∑ti=1 d(Pattern, Dnai), the sum of distances between Pattern and each string in Dna = {Dna1, ..., Dnat}. 
 
 #Input: A string Pattern followed by a collection of strings Dna.
 #Output: d(Pattern, Dna).
