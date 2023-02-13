@@ -1,125 +1,363 @@
-import sys
-from re import split
-from random import choice
-from collections import defaultdict
+#Input: Integers k and d followed by a collection of paired k-mers PairedReads.
+#Output: A string Text with (k, d)-mer composition equal to PairedReads.
 
-#NOT SUBMITTED NOT WORKING
-def EulerianCycle(adj_list):
-    startN, edges = choice(list(adj_list.items())) #form with random 
-    targetN = choice(edges)
-    Cycle = [startN, targetN]
-    currN = targetN
-    adj_list = RemoveEdges(adj_list, startN, targetN)
-    while currN != startN:
-        edges = adj_list[currN]
-        targetN = choice(edges)
-        adj_list = RemoveEdges(adj_list, currN, targetN)
-        currN = targetN
-        Cycle.append(currN)
-    true = adj_list
-    while true:
-        beginwith = [(idx, node) for idx, node in enumerate(Cycle) if node in adj_list]
-        idx, new_start = choice(beginwith)
-        TraverseCycle = Cycle[idx:] + Cycle[1:idx + 1]
-        targetN = choice(adj_list[new_start])
-        adj_list = RemoveEdges(adj_list, new_start, targetN)
-        currN = targetN
-        TraverseCycle.append(currN)
-        while currN != new_start:
-            edges = adj_list[currN]
-            targetN = choice(edges)
-            adj_list = RemoveEdges(adj_list, currN, targetN)
-            currN = targetN
-            TraverseCycle.append(currN)
-        Cycle = TraverseCycle
-    return Cycle
 
-def RemoveEdges(adj_list, fromNodes, endNodes):
-    adj_list[fromNodes].remove(endNodes)
-    if not adj_list[fromNodes]: #not empty
-        del adj_list[fromNodes] #then delete it 
-    return adj_list
+"""
+Sample Input:
+4 2
+GAGA|TTGA
+TCGT|GATG
+CGTG|ATGT
+TGGT|TGAG
+GTGA|TGTT
+GTGG|GTGA
+TGAG|GTTG
+GGTC|GAGA
+GTCG|AGAT
 
-def EulerianPath(adj_list):
-    diff = {}
-    for froms, ends in adj_list.items():
-        if froms in diff:
-            diff[froms] += len(ends)
+Sample Output:
+GTGGTCGTGAGATGTTGA
+"""
+
+def StringComposition(Text, k):
+    """
+    Input: An integer k and a string Text.
+    Output: a list of all k-mers in lexocaphical order
+    """
+    composition = []
+    for i in range(len(Text)-k +1):
+        composition.append(Text[i:i+k])
+    composition.sort()
+    return composition
+#myfile = open('hi.txt', 'r')
+#data = myfile.read()
+#a = StringCompositionProblem(data, 100)
+#print(*a, sep = "\n")
+def PathToGenome(path):
+    """
+    Input: A sequence path of k-mers Pattern1, … ,Patternn such that the last
+    k - 1 symbols of Patterni are equal to the first k-1 symbols of Patterni+1 for 1 ≤ i ≤ n-1.
+    Output: A string Text of length k+n-1 such that the i-th k-mer in Text is equal to Patterni (for 1 ≤ i ≤ n).
+    """
+    genome = path[0]
+    for pat in path[1:]:
+        genome += pat[-1]
+    return genome
+
+def Overlap(Patterns):
+    """
+    Input: A collection Patterns of k-mers.
+    Output: The overlap graph Overlap(Patterns)), in the form of an adjacency list.
+    """
+    Patterns.sort()
+    overlap = {}
+    k = len(Patterns[0])
+    Pattern2 = Patterns[:]
+    for pattern in Patterns:
+        suffix = pattern[1:]
+        lt = []
+        Pattern2.remove(pattern)
+        for pattern2 in Pattern2:
+            prefix = pattern2[:k-1]
+            if suffix == prefix:
+                lt.append(pattern2)
+        Pattern2.append(pattern)
+        if len(lt)> 0:
+            overlap[pattern] = lt
+    return overlap
+#file1 =  open("hi.txt").read()
+#pa = file1.split("\n")
+#a = Overlap(pa)
+#for pattern, adjacencies in a.items():
+#        print(pattern, '->', ','.join(adjacencies))
+def DeBruijnGraph(Text, k):
+    """
+     Input: An integer k and a string Text.
+     Output: DeBruijnk(Text).
+    """
+    kmer = []
+    deb = {}
+    for i in range(len(Text)- k + 1):
+        kmer.append(Text[i:i+k])
+    for i in range(len(kmer)):
+        n1 = kmer[i]
+        if n1[:k-1] not in deb:
+            deb[n1[:k-1]] =[]
+        lenh = len(kmer)-1
+        if i == lenh:
+            n2 = kmer[i]
+            deb[n1[:k-1]].append(n2[1:k])
+        if i != lenh:
+            n2 = kmer[i+1]
+            deb[n1[:k-1]].append(n2[:k-1])
+    return deb
+
+#myfile = open('hi.txt', 'r')
+#data = myfile.read()
+#a = DeBruijnGraph(data, 12)
+#for pattern, adjacencies in a.items():
+#        print(pattern, '->', ','.join(adjacencies))
+def DeBruijnGraphkmers(Patterns):
+    """
+     Input: A collection of k-mers Patterns.
+     Output: The adjacency list of the de Bruijn graph DeBruijn(Patterns).
+    """
+    deb = {}
+    k = len(Patterns[0])
+    for km in Patterns:
+        prefix1 = km[:k-1]
+        suffix1 = km[1:]
+        if prefix1 in deb:
+            deb[prefix1].append(suffix1)
         else:
-            diff[froms] = len(ends)
-        for end in ends:
-            if end in diff:
-                diff[end] -= 1
+            deb[prefix1] = [suffix1]
+    return deb
+from collections import Counter
+def MaximalNonBranchingPaths(Graph):
+    """
+    Input: The adjacency list of a graph whose nodes are integers.
+     Output: The collection of all maximal nonbranching paths in this graph.
+    """
+    Paths = []
+    wlists = list(Graph.values())
+    wlist = []
+    for lis in wlists:
+        wlist.extend(lis)
+    b= Counter(wlist)
+    a = list(Graph.keys())
+    for v in a:
+        if len(Graph[v])!=1 or b[v]!= 1:
+            if len(Graph[v]) > 0:
+                for i in range(len(Graph[v])):
+                    w =  Graph[v][i]
+                    Path = [v, w]
+                    while w in Graph and len(Graph[w]) == 1 and b[w] == 1:
+                        u = Graph[w][0]
+                        a.remove(w)
+                        Path.append(u)
+                        w = u
+                    Paths.append(Path)
+    a.reverse()
+    for v in a:
+        if len(Graph[v]) ==1 and  b[v] == 1:
+            cycle= [v]
+            w = Graph[v][0]
+            cycle.append(w)
+            while w in Graph and len(Graph[w]) == 1 and b[w] == 1:
+                u = Graph[w][0]
+                cycle.append(u)
+                if u == v:
+                    Paths.append(cycle)
+                    for cy in cycle[1:]:
+                        a.remove(cy)
+                    break
+                w = u
+    return Paths
+
+#file1 = open("hi.txt").read()
+#content = file1.split("\n")
+#dict1 = {}
+#for line in content: #creates dict, a dictionary, dict[nodes] = connectednodes
+#    toAdd = line.split(' -> ')[0]
+#    toAdd2 = line.split(' -> ')[1]
+#    toAdd2 = toAdd2.split(',')
+#    toAdd3 = []
+#    for ele in toAdd2:
+#        toAdd3.append(int(ele))
+#    dict1[int(toAdd)] = toAdd2
+#pr = MaximalNonBranchingPaths(dict1)
+#for element in pr:
+#    element2= []
+#    for ele in element:
+#        element2.append(str(ele))
+#    element3="->".join(element2)
+#    print(element3)
+
+
+
+
+def ContigGeneration(Patterns):
+    """
+     Input: A collection of k-mers Patterns.
+     Output: All contigs in DeBruijn(Patterns).
+    """
+    graph = DeBruijnGraphkmers(Patterns)
+    paths = MaximalNonBranchingPaths(graph)
+    contings = []
+    for path in paths:
+        contings.append(PathToGenome(path))
+    return contings
+
+
+
+#a = ContigGeneration(pa)
+#a.sort()
+#res = ""
+#for a2 in a:
+#    res+= a2 +" "
+#print(res)
+#for pattern, adjacencies in a.items():
+#    print(pattern, '->', ','.join(adjacencies))
+
+def EulerianCycle(Graph):
+    """
+    Input: The adjacency list of an Eulerian directed graph.
+    Output: An Eulerian cycle in this graph.
+    """
+    stack = []
+    location = list(Graph.keys())[0]
+    circuit = []
+    while Graph != {}:
+        while location in Graph:
+            stack.append(location)
+            location = Graph[location][0]
+            if len(Graph[stack[-1]]) == 1:
+                Graph.pop(stack[-1])
             else:
-                diff[end] = -1
-    addi = [node for node, diffin in diff.items() if diffin == -1][0]
-    addj = [node for node, diffin in diff.items() if diffin == 1][0]
-    if addi in adj_list:
-        adj_list[addi].append(addj)
-    cycle = EulerianCycle(adj_list)
-    idex = 0
-    while True:
-        if cycle[idex] == addi and cycle[idex + 1] == addj:
-             break
-        idex = idex + 1
-    return cycle[idex + 1:] + cycle[1:idex + 1]
+                Graph[stack[-1]].remove(location)
+        circuit.append(location)
+        location = stack[-1]
+        stack = stack[:-1]
+    stack.append(location)
+    stack.reverse()
+    circuit.extend(stack)
+    circuit.reverse()
+    return circuit
 
-'''
-def StringSpelledByGappedGenome(gappedpatterns, k, d):
-    firstPattern = [pattern.split('|')[0] for pattern in gappedpatterns ]
-    secondPattern = [pattern.split('|')[1] for pattern in gappedpatterns ]
-    preffixstr = stringSpelledByPatterns(firstPattern,k)
-    suffixstr = stringSpelledByPatterns(secondPattern,k)
-    combstr = k+d 
-    if preffixstr[combstr:] == preffixstr[combstr:]:
-        return preffixstr + suffixstr[-(combstr):]
+from collections import Counter
+def EulerianPath(Graph):
+    """
+    Input: The adjacency list of a directed graph that has an Eulerian path.
+    Output: An Eulerian path in this graph.
+    """
+    wlists = list(Graph.values())
+    wlist = []
+    for lis in wlists:
+        wlist.extend(lis)
+    a = {}
+    for ele in list(Graph.keys()):
+        a[ele] = len(Graph[ele])
+    b= Counter(wlist)
+    for ele in a:
+        if ele not in b or a[ele]!= b[ele]:
+            v = ele
+    for ele in b:
+        if ele not in a:
+            w = ele
+            Graph[w]= [v]
+            break
+        if a[ele]!= b[ele]:
+            w = ele
+            Graph[w].append(v)
+    stack = []
+    location = v
+    circuit = []
+    while Graph != {}:
+        while location in Graph:
+            stack.append(location)
+            location = Graph[location][0]
+            if len(Graph[stack[-1]]) == 1:
+                Graph.pop(stack[-1])
+            else:
+                Graph[stack[-1]].remove(location)
+        circuit.append(location)
+        location = stack[-1]
+        stack = stack[:-1]
+    stack.append(location)
+    stack.reverse()
+    circuit.extend(stack)
+    circuit.reverse()
+    return circuit[:-1]
+def StringReconstruction(k, Patterns):
+        dB = DeBruijnGraphkmers(Patterns)
+        path = EulerianPath(dB)
+        tex = PathToGenome(path)
+        return tex
 
-def stringSpelledByPatterns(patterns,k):
-    stringPat = [patterns[0]]
-    for pattern in patterns[1:]:
-        stringPat.append(pattern[-1])
-    return ''.join(stringPat)
-
-'''
-def StringSpelledByGappedPatterns(GappedPatterns, k, d):
-    prefix_string = ''
-    suffix_string = ''
-    for i, pattern_pair in enumerate(GappedPatterns):
-        if i != len(GappedPatterns) - 1:
-            prefix_string += pattern_pair[0][0]
-            suffix_string += pattern_pair[1][0]
+#dict = {}
+#for i in content: #creates dict, a dictionary, dict[nodes] = connectednodes
+#    list2 = i.split() #split by whitespace
+#    x = list2[2] #takes the last section
+#    dict[int(list2[0])] = [int(s) for s in x.split(',') if s.isdigit()]
+#pr = EulerianPath(dict)
+#out = ""
+#for i in range(0, len(pr)-1):
+#    out = out+ str(pr[i]) + "->"
+#out = out + str(pr[-1])
+#print(out)
+import itertools
+def kUniversalCircularString(k):
+    """
+     Input: An integer k.
+     Output: A k-universal circular string.
+    """
+    a = ["".join(seq) for seq in itertools.product("01", repeat=k)]
+    dB = DeBruijnGraphkmers(a)
+    path = EulerianCycle(dB)
+    tex = PathToGenome(path)
+    return tex[:len(tex)-k+1], len(tex[:len(tex)-k+1])
+#file1 =  open("hi.txt").read()
+#pa = file1.split("\n")
+#a = kUniversalCircularString(8)
+#print(a)
+def PairedComposition(k,d,Text):
+    """
+    Input:
+    Output:
+    """
+    reads = []
+    for i in range(len(Text)-2*k-d+1):
+        pat1 = Text[i:i+k]
+        pat2 = Text[i+k+d:i+k+d+k]
+        read = [pat1+"|"+ pat2]
+        reads.append(read)
+    reads.sort()
+    return reads
+def deBruijnReadsgraph(k, d, Reads):
+    """
+    Integers k and d followed by a collection of paired k-mers PairedReads.
+    The adjacency list of the de Bruijn graph DeBruijn(Reads)
+    """
+    Graph = {}
+    for read in Reads:
+        read = read[1:-1]
+        r = read.split("|")
+        prefix1 = r[0][:k-1]
+        prefix2 = r[1][:k-1]
+        suffix1 = r[0][1:]
+        suffix2 = r[1][1:]
+        prefix = prefix1+"|"+prefix2
+        suffix = suffix1+"|"+suffix2
+        if prefix in Graph:
+            Graph[prefix].append(suffix)
         else:
-            prefix_string += pattern_pair[0]
-            suffix_string += pattern_pair[1]
-    for i in range(k + d + 1, len(prefix_string)):
-        if prefix_string[i] != suffix_string[i - k - d - 1]:
-            return -1
-    return prefix_string + suffix_string[len(suffix_string) - k - d - 1:]
+            Graph[prefix] = [suffix]
+    return Graph
 
-def DeBruijnwithreadpairs(paired_reads):
-    adj_list = defaultdict(list)
-    for pair in paired_reads:
-        adj_list[(pair[0][:-1], pair[1][:-1])].append((pair[0][1:], pair[1][1:]))
-    return adj_list
+def StringSpelledbyaGappedGenomePath(path, k, d):
+    """
+    Input: A sequence of (k, d)-mers (a1|b1), ..., (an|bn) such that Suffix((ai|bi)) = Prefix((ai+1|bi+1)) for 1 ≤ i ≤ n - 1.
+    Output: A string Text of length k + d + k + n - 1 such that the i-th (k, d)-mer of Text is equal to (ai|bi) for 1 ≤ i ≤ n (if such a string
+    exists).
+    """
+    p1 = path[0].split("|")
+    prefixstr = p1[0]
+    sufixstr = p1[1]
+    for p in path[1:]:
+        p1 = p.split("|")
+        prefixstr += p1[0][-1]
+        sufixstr+= p1[1][-1]
+    for i in range(k + d + 1, len(prefixstr)):
+        if prefixstr[i] != sufixstr[i - k - d]:
+            return "there is no string spelled by the gapped patterns"
+    return prefixstr+ sufixstr[-k-d:]
 
-def StringReconstructionwithReadpairs(k, d, paired_reads):
-    adj_list = DeBruijnwithreadpairs(paired_reads)
-    path = EulerianPath(adj_list)
-    return StringSpelledByGappedPatterns(path, k - 1, d)
-
-filename = 'dataset_442816_16.txt'
-with open(filename) as f:
-    lines = f.read().splitlines()
-    k = int(lines[0].split()[0])
-    d = int(lines[0].split()[1])
-    pairedKmers = lines[1:]
-        
-    adjlist,nodes = build_deGruijnGraphFromPairedKmers(pairedKmers)
-    numedge = 0
-    for v in adjlist.keys():
-        numedge += len(adjlist[v])
-
-    path = eupath.eulerian_path(adjlist)
-    patterns = [nodes[p] for p in path]
-    string = gappedString.stringSpelledByGappedPatterns(patterns,k,d)
-    print string
+def StringReconstructionReadPairs(k, d, Reads):
+    """
+     Input: Integers k and d followed by a collection of paired k-mers PairedReads.
+     Output: A string Text with (k,d)-mer composition equal to PairedReads (if such a string exists).
+    """
+    graph = deBruijnReadsgraph(k, d, Reads)
+    path = EulerianPath(graph)
+    gen = StringSpelledbyaGappedGenomePath(path, k, d)
+    return gen
