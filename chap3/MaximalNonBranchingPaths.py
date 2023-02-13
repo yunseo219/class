@@ -1,3 +1,21 @@
+"""
+Input: The adjacency list of a graph whose nodes are integers.
+Output: The collection of all maximal nonbranching paths in this graph.
+
+Sample Input:
+1 -> 2
+2 -> 3
+3 -> 4,5
+6 -> 7
+7 -> 6
+
+Sample Output:
+1 -> 2 -> 3
+3 -> 4
+3 -> 5
+7 -> 6 -> 7
+"""
+
 import sys
 from random import choice
 from re import split
