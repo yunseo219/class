@@ -7,14 +7,9 @@
 #Text = CAATCCAAC
 #output = CAATC AATCC ATCCA TCCAA CCAAC
 
-def StringReconstruction(pattern):
-    string = pattern[0]
-    for i in range(1, len(pattern)):
-        string += pattern[i][-1]
-    return string
-
-file = 'dataset_442810_3 (7).txt'
-with open(file) as f:
-	pattern = f.read().splitlines()
-	
-print(StringReconstruction(pattern))
+def StringReconstruction(k, text):
+    kmers = []
+    for i in range(len(text) - k + 1):
+        kmers.append(text[i:i+k])
+    return (kmers)
+print(' '.join(StringReconstruction(k, text)))
