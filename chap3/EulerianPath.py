@@ -1,3 +1,5 @@
+#Eulerian Path problem output designs to visit every EDGE in the graph once whereas Hamilitonian Path designs to visit every NODE.
+
 import sys
 from random import choice
 from re import split
