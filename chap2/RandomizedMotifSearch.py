@@ -1,7 +1,7 @@
 #we can begin from a collection of randomly chosen k-mers Motifs in Dna, construct Profile(Motifs), and use this profile to generate a new collection of k-mers: Motifs(Profile(Motifs), Dna). 
 # and hope that Motifs(Profile(Motifs), Dna) has a better score than the original collection of k-mers Motifs.
 #RandomizedMotifSearch are slightly less conserved than the motifs returned by MedianString, RandomizedMotifSearch has the advantage of being able to find longer motifs
-
+#The probability that they capture at least one implanted motif is significant. Even in the case of difficult motif finding problems for which this probability is small, we can run RandomizedMotifSearch many times, so that it will almost certainly catch at least one implanted motif, thus creating a statistical bias pointing toward the correct motif.
 #Input: Integers k and t, followed by a collection of strings Dna.
 #Output: A collection BestMotifs resulting from running RandomizedMotifSearch(Dna, k, t) 1,000 times. Remember to use pseudocounts!
 
