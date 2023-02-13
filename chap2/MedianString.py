@@ -1,3 +1,18 @@
+# Find a k-mer Pattern that minimizes d(Pattern, Dna); aka minimum hamming distance, where this function is itself computed by taking a minimum over all choices of k-mers from each string in Dna. 
+#Runtime: 4^k*n*t*k => faster than bruteforce but can be better
+
+#Input: An integer k, followed by a collection of strings Dna.
+#Output: A k-mer Pattern that minimizes d(Pattern, Dna) among all possible choices of k-mers. (If there are multiple such strings Pattern, then you may return any one.)
+"""
+   MedianString(Dna, k)
+       distance ← ∞
+       for each k-mer Pattern from AA…AA to TT…TT
+           if distance > d(Pattern, Dna)
+                distance ← d(Pattern, Dna)
+                Median ← Pattern
+       return Median
+"""
+
 k = 6
 dna = ["CTAGTGTCCCACTGATAGTGAGGATTAGCCTGTCCGACACGC",
 "GAGATCTGACCGACATTTGCTGAAACCCTGCTAACCACGAAG",
@@ -9,6 +24,7 @@ dna = ["CTAGTGTCCCACTGATAGTGAGGATTAGCCTGTCCGACACGC",
 "CCGCGTTTTAGGTGTCCGTAGGAATCTCGTACCTTCAATTTC",
 "CATGAACCTGACGTCCCGCCTATTCGGTTCGGCCACTGTCCG",
 "CTACCTTGGCCGCCGACTCTTTATATCTCGAACACGGCGGCG"]
+#output: 
 
 def hamming_distance(seq1,seq2):
     distance = 0
@@ -53,3 +69,5 @@ def MedianString(dna, k):
     return median
             
 print(" ".join(MedianString(dna, k)))
+
+#not running; check answers
