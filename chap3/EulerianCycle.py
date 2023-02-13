@@ -1,6 +1,6 @@
 #Construct the de Bruijn graph from a set of k-mers.
 #Eulerian Cycle one node has path in and out to create circle in the graph
-# in = out for each node
+# in = out for each node -> balanced graph
 
 #Input: A collection of k-mers Patterns.
 #Output: The adjacency list of the de Bruijn graph DeBruijn(Patterns).
