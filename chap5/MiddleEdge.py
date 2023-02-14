@@ -3,10 +3,22 @@ import sys,math
 v = 'PLEASANTLY'
 w = 'MEASNLY'
 '''
+Solve the Middle Edge in Linear Space Problem (for protein strings).
+
+Input: Two amino acid strings.
+Output: A middle edge in the alignment graph in the form "(i, j) (k, l)", where (i, j) connects to (k, l). To compute scores, use the BLOSUM62 scoring matrix and a (linear) indel penalty equal to 5.
+
 MIDDLENODE(top, bottom, left, right), which returns the coordinate i of the middle node
 (i, j) defined by the substrings vtop+1 . . . vbottom and wleft+1 . . . wright. The algorithm also
 calls MIDDLEEDGE(top, bottom, left, right), which returns "!" , "#", or "&" depending
 on whether the middle edge is horizontal, vertical, or diagonal.
+
+Sample Input:
+PLEASANTLY
+MEASNLY
+
+Sample Output:
+(4, 3) (5, 4)
 '''
 indelpenalty = 5
 
