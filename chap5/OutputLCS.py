@@ -1,3 +1,19 @@
+"""
+Input: Two strings s and t.
+Output: A longest common subsequence of s and t. (Note: more than one solution may exist, in which case you may output any one.)
+
+    OutputLCS(backtrack, v, i, j)
+        if i = 0 or j = 0
+            return ""
+        if backtracki, j = "↓"
+            return OutputLCS(backtrack, v, i - 1, j)
+        else if backtracki, j = "→"
+            return OutputLCS(backtrack, v, i, j - 1)
+        else
+            return OutputLCS(backtrack, v, i - 1, j - 1) + vi
+            
+"""
+
 import os
 import sys
 
