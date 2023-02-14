@@ -1,3 +1,19 @@
+"""
+Solve the Fitting Alignment Problem.
+
+Input: Two nucleotide strings v and w, where v has length at most 1000 and w has length at most 100.
+Output: A highest-scoring fitting alignment between v and w. Use the simple scoring method in which matches count +1 and both the mismatch and indel penalties are 1.
+
+Sample Input:
+GTAGGCTTAAGGTTA
+TAGATA
+
+Sample Output:
+2
+TAGGCTTA
+TAGA--TA
+"""
+
 x ='GTAGGCTTAAGGTTA'
 y = 'TAGATA'
 
