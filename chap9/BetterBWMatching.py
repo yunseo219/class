@@ -1,3 +1,16 @@
+"""
+Input: A string BWT(Text) followed by a collection of strings Patterns.
+Output: A list of integers, where the i-th integer corresponds to the number of substring matches of the i-th member of Patterns in Text.
+
+Sample Input:
+GGCGCCGC$TAGTCACACACGCCGTA
+ACC CCG CAG
+
+Sample Output:
+1 2 1
+
+Memory: 2Genome = O(Genome)
+"""
 
 def BWT_match(BWT, pattern_list):
     FirstOccurrence = {}
