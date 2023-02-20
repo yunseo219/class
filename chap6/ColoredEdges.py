@@ -1,4 +1,14 @@
 '''
+Code Challenge: Implement ColoredEdges.
+Input: A genome P.
+Output: The collection of colored edges in the genome graph of P in the form (x, y).
+
+Sample Input:
+(+1 -2 -3)(+4 +5 -6)
+
+Sample Output:
+(2, 4), (3, 6), (5, 1), (8, 9), (10, 12), (11, 7)
+
 ColoredEdges(P)
      Edges ← an empty set
      for each chromosome Chromosome in P
