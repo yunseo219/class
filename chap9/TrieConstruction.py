@@ -33,7 +33,8 @@ TrieConstruction(Patterns)
                 currentNode ← newNode
     return Trie
 
-#Bruteforce is not optimal
+#Runtime: total O(Genome +Pattern); #Runtime: O(Genome) to construct the suffix tree directly; O(Genome +Pattern) to find pattern matches
+#Memory: total O(Genome +Pattern); same
 """
 
 class TrieNode:
