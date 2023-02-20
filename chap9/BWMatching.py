@@ -1,3 +1,14 @@
+"""
+Input: A string BWT(Text), followed by a collection of Patterns.
+Output: A list of integers, where the i-th integer corresponds to the number of substring matches of the i-th member of Patterns in Text.
+
+Sample Input:
+TCCTCTATGAGATCCTATTCTATGAAACCTTCA$GACCAAAATTCTCCGGC
+CCT CAC GAG CAG ATC
+
+Sample Output:
+2 1 1 0 1
+"""
 
 def BWT_match(BWT, pattern_collection):
     diction = {}
