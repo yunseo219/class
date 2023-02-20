@@ -1,3 +1,19 @@
+"""
+Code Challenge: Solve the 2-Break Distance Problem.
+
+Input: Genomes P and Q.
+Output: The 2-break distance d(P, Q).
+
+You may be wondering how the graph representation that we have been using for breakpoint graphs could be transformed into an adjacency list. After all, we haven’t even labeled the nodes of this graph! Check out Charging Station: From Genomes to the Breakpoint Graph to see how to transform a genome into a graph that is easier to work with in our implementations.
+
+Sample Input:
+(+1 +2 +3 +4 +5 +6)
+(+1 -3 -6 -5)(+2 -4)
+
+Sample Output:
+3
+"""
+
 P = '(+1 +2 +3 +4 +5 +6)'
 Q = '(+1 -3 -6 -5)(+2 -4)'
 
