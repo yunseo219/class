@@ -1,3 +1,20 @@
+"""
+Shared k-mers Problem: Given two strings, find all their shared k-mers.
+
+Input: An integer k and two strings.
+Output: All k-mers shared by these strings, in the form of ordered pairs (x, y) corresponding to starting positions of these k-mers in the respective strings.
+
+Sample Input:
+3
+AAACTCATC
+TTTCAAATC
+
+Sample Output:
+(0, 4)
+(0, 0)
+(4, 2)
+(6, 6)
+"""
 from string import maketrans
 
 '''
