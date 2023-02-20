@@ -15,6 +15,10 @@ Sample Output:
 (+1 -2 -3)(+4)
 (+1 -2 -4 -3)
 (-3 +1 +2 -4)
+
+Breakpointgraph(P,Q) -> ... -> Breakpointgraph(Q,Q)
+Cycle(P,Q) -> ... -> Cycle(Q,Q)=blocks(Q,Q)
+#of red-blue cycles increases by blocks(P,Q) - cycle(P,Q)
 """
 
 """
