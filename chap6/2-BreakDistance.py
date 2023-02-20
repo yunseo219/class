@@ -13,9 +13,11 @@ Sample Input:
 Sample Output:
 3
 """
-
+#black directed edges represent synteny blocks
+#red undirected edges connect adjacent synteny blocks
+#reversals on circular chromosomes; A reversal deletes two red edges and replaces them by two other red edges; ex, P = (+a-b-c+d);circle Q = (+a-b-d+c); x in circle; transformation
 P = '(+1 +2 +3 +4 +5 +6)'
-Q = '(+1 -3 -6 -5)(+2 -4)'
+Q = '(+1 -3 -6 -5)(+2 -4)' #example of fusion/fission as replacement of red edges
 
 
 def two_break_distance(P, Q):
