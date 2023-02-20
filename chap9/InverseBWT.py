@@ -11,7 +11,7 @@ Sample Output:
 TACATCACGT$
 """
 #ValueError: 9 is not in list
-
+# First-Last property: the k-th occurrence of symbol in Firstcolumn and the k-th occurrence of symbol in Lastcolumn correspond to the same position of symbol in Genome
 def inverse_bwt(transform):
     # create a list of tuples containing each character and its index in the transform
     tuples = [(char, i) for i, char in enumerate(transform)]
