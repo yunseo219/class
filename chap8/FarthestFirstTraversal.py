@@ -1,3 +1,24 @@
+"""
+     Input: Integers k and m followed by a set of points Data in m-dimensional space.
+     Output: A set Centers consisting of k points (centers) resulting from applying FarthestFirstTraversal(Data, k),
+     where the first point from Data is chosen as the first center to initialize the algorithm.
+
+Sample Input:
+3 2
+0.0 0.0
+5.0 5.0
+0.0 5.0
+1.0 1.0
+2.0 2.0
+3.0 3.0
+1.0 2.0
+
+Sample Output:
+0.0 0.0
+5.0 5.0
+0.0 5.0
+"""
+
 import math
 
 '''
