@@ -1,3 +1,27 @@
+"""
+Input: Integers k and m followed by a set of points Data in m-dimensional space.
+Output: A set Centers consisting of k points (centers) resulting from applying the Lloyd algorithm to Data and Centers, where the first k points from Data are selected as the first k centers.
+
+Sample Input:
+2 2
+1.3 1.1
+1.3 0.2
+0.6 2.8
+3.0 3.2
+1.2 0.7
+1.4 1.6
+1.2 1.0
+1.2 1.1
+0.6 1.5
+1.8 2.6
+1.2 1.3
+1.2 1.0
+0.0 1.9
+
+Sample Output:
+1.800 2.867
+1.060 1.140
+"""
 import math
 
 
